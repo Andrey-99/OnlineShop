@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+</head>
+<body>
+<div th:if="${users}">
+    <div th:each="user : ${users}">
+        <p>Никнейм: <span th:text="${user.getUsername()}"></span></p>
+        <p>Роли:</p>
+        <div th:each="userRole : ${user.getRoles()}">
+            <p th:text="${userRole}"></p>
+        </div>
+        <a th:href="@{/users/{path} (path = ${user.getId()})}">edit</a>
+        <hr>
+    </div>
+</div>
+</body>
+</html>
