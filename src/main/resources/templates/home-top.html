@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>GR Home</title>
     <link rel="stylesheet" href="/static/style.css">
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+    <style>
+            .pagination-div{user-select: none;}
+            .pagination-div span{border-radius:3px;border:1px solid #999;
+            padding:5px;margin:10px 0px 0px 10px;display:inline-block}
+            span.selected{background:#ccf;}
+    </style>
 </head>
 <body>
 <header>
@@ -17,8 +24,8 @@
     </form>
 </header>
     <h1>Топ всех продуктов из БД</h1>
-    <div th:if="${products}">
-        <div th:each="product : ${products}">
+    <div th:if="${page}">
+        <div th:each="product : ${page.content}">
             <p><a th:text="${product.producttitle}"></a></p>
             <p>от продавца - <span th:text="${product.getSeller().getUsername()}"></span></p>
             <p>Стоимость: <span th:text="${product.getPrice()}"></span></p>
@@ -31,5 +38,21 @@
             <hr>
         </div>
     </div>
+
+    <div class="pagination-div">
+        <span th:if="${page.hasPrevious()}">
+            <a th:href="@{/product(page=${page.number-1},size=${page.size})}">Previous</a>
+        </span>
+        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+            <span th:if="${page.number == i}" class="selected">[[${i}+1]]</span>
+            <span th:unless="${page.number == i}">
+                 <a th:href="@{/home(page=${i},size=${page.size})}">[[${i}+1]]</a>
+            </span>
+        </th:block>
+        <span th:if="${page.hasNext()}">
+            <a th:href="@{/home(page=${page.number+1},size=${page.size})}">Next</a>
+        </span>
+    </div>
+
 </body>
 </html>
