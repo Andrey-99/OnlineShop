@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Страница товара</title>
+</head>
+<body>
+    <div th:if="${page}">
+        <div th:each="product : ${page.content}">
+            <!--            <p><a th:text="${product.producttitle}"></a></p>-->
+            <a th:href="'/home/' + ${product.id}"><span th:text="${product.producttitle}"> </span></a><br>
+            <p>от продавца - <span th:text="${product.getSeller().getUsername()}"></span></p>
+            <p>Стоимость: <span th:text="${product.getPrice()}"></span></p>
+            <p>Описание: <p th:text="${product.getDescription()}"></p></p>
+            <p>Рейтинг: <span th:text="${product.getRaiting()}"></span></p>
+            <p>Количество на складе: <span th:text="${product.getCount()}"></span></p>
+            <div th:if="${product.filename}">
+                <a th:href="'/home/' + ${product.id}"><img th:src="@{/img/{path} (path = ${product.getFilename()})}"></a><br>
+                <!--                <img th:src="@{/img/{path} (path = ${product.getFilename()})}">-->
+            </div>
+            <a th:href="'/home/' + ${product.id} + '/edit'">Редактировать</a><br>
+            <form th:action="'/home/' + ${product.id} + '/remove'" method="post">
+                <button type="submit">Удалить</button>
+            </form>
+            <hr>
+        </div>
+    </div>
+
+</body>
+</html>

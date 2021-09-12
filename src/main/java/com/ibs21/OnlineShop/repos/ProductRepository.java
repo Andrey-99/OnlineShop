@@ -12,4 +12,7 @@ import java.util.List;
 public interface ProductRepository extends CrudRepository<Product, Long> {
     Page<Product> findAll(Pageable pageable);
     Page<Product> findByProducttitle(String producttitle, Pageable pageable);
+    Page<Product> findById(Long id, Pageable pageable);
+
+
 }

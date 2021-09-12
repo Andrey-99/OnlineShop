@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование продукта</title>
+</head>
+<body>
+<h1>Редактирование продукта</h1>
+<div th:each="product : ${page.content}">
+    <form method="post" enctype="multipart/form-data">
+        <p th:text="${product.getSeller().getUsername()}"></p>
+        <p>Введите наименование продукта  <input type="text" name="productname" th:value="${product.producttitle}"/></p>
+        <p>Введите описание продукта <textarea name="description"  cols="40" rows="3" th:text="${product.description}"/></p>
+        <p>Выберите категорию</p>
+<!--        <select name="category" >-->
+<!--            <option value="Гигиена">Гигиена</option>-->
+<!--            <option value="Игры">Игры</option>-->
+<!--            <option value="Книги">Книги</option>-->
+<!--            <option value="Сувениры">Сувениры</option>-->
+<!--            <option value="Электроника">Электроника</option>-->
+<!--        </select>-->
+        <p>Введите количество штук продукта  <input type="number" th:value="${product.count}" name="count"  min="0" /></p>
+        <p>Введите цену продукта(в рублях)  <input type="number" th:value="${product.price}" name="price"  min="0" /></p>
+        <input type='hidden' value='${_csrf.token}'/>
+        <input type="file" name="file">
+        <button type="submit">Изменить</button>
+    </form>
+</div>
+</body>
+</html>
