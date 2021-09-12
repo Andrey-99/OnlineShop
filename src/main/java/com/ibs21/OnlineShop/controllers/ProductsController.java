@@ -47,6 +47,7 @@ public class ProductsController {
                       @RequestParam("description") String description,
                       @RequestParam("count") int count,
                       @RequestParam("price") int price,
+                      @RequestParam("category") String category,
                       @RequestParam("file") MultipartFile file) throws IOException {
         if (productname != null && description != null && count > 0 && price > 0) {
             Product product = new Product();
@@ -54,6 +55,7 @@ public class ProductsController {
             product.setDescription(description);
             product.setCount(count);
             product.setPrice(price);
+            product.setCategory(category);
             product.setRaiting(0);
             product.setSeller(user);
             if(file != null && !file.getOriginalFilename().isEmpty()) {

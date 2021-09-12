@@ -7,6 +7,7 @@ create table product (
     count integer not null,
     description varchar(255),
     filename varchar(255),
+    category varchar(255),
     price integer,
     producttitle varchar(255),
     raiting integer not null,
@@ -28,6 +29,7 @@ create table user (
     user_id bigint not null,
     roles varchar(255)
 );
+
 
 alter table product
     add constraint FK979liw4xk18ncpl87u4tygx2u
