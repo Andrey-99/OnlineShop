@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +50,7 @@ public class TopController {
     }
 
 
+    @PreAuthorize("hasRole('SELLER')")
     @GetMapping("/{id}/edit")
     public String productEdit(@PathVariable(value = "id") Long id, Model model, Pageable pageable) {
         if (!productRepository.existsById(id)) {
@@ -61,6 +63,7 @@ public class TopController {
         return "products/product-edit";
     }
 
+    @PreAuthorize("hasRole('SELLER')")
     @PostMapping("/{id}/edit")
         public String productUpdate(@PathVariable(value = "id") Long id, @AuthenticationPrincipal User user,
                 @RequestParam("productname") String productname,
@@ -92,6 +95,7 @@ public class TopController {
             return "redirect:/home";
         }
 
+        @PreAuthorize("hasRole('SELLER')")
         @PostMapping("/{id}/remove")
         public String productDelete(@PathVariable(value = "id") Long id, Model model){
             Product product = productRepository.findById(id).orElseThrow();
