@@ -5,6 +5,8 @@ import com.ibs21.OnlineShop.domain.User;
 import com.ibs21.OnlineShop.repos.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -69,5 +71,6 @@ public class ProductsController {
         }
         return "redirect:/home";
     }
+
 
 }

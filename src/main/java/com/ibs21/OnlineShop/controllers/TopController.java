@@ -9,9 +9,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/home")
@@ -28,4 +30,29 @@ public class TopController {
 //        model.addAttribute("url", "/home");
         return "home-top";
     }
+
+//    @PostMapping("filter")
+//    public String filter(@RequestParam String filter, Model model, Pageable pageable){
+//        Page<Product> page;
+//        page = productRepository.findByProducttitle(filter, pageable);
+//        model.addAttribute("page", page);
+//        return "home-top";
+//    }
+
+    @PostMapping("search")
+    public String filter(@RequestParam String filter, Model model, Pageable pageable){
+        String message = "Такого товара нет";
+        Page<Product> page;
+        if (filter != null && !filter.isEmpty()){
+            page = productRepository.findByProducttitle(filter, pageable);
+            if(page == null || page.isEmpty()){
+                model.addAttribute("message", message);
+            }
+        }else {
+            page = productRepository.findAll(pageable);
+        }
+            model.addAttribute("page", page);
+        return "home-top";
+    }
+
 }

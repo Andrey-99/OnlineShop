@@ -24,6 +24,14 @@
     </form>
 </header>
     <h1>Топ всех продуктов из БД</h1>
+    <h2>Поиск продукта</h2>
+    <form action="/home/search" method="post">
+        <input  type="text" name="filter" th:value="${param.filter}">
+        <button type="submit">Найти</button>
+    </form>
+    <div th:if="${message}">
+        <p th:text="${message}"></p>
+    </div>
     <div th:if="${page}">
         <div th:each="product : ${page.content}">
             <p><a th:text="${product.producttitle}"></a></p>
