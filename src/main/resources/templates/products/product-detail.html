@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -21,12 +21,12 @@
                 <a th:href="'/home/' + ${product.id}"><img th:src="@{/img/{path} (path = ${product.getFilename()})}"></a><br>
                 <!--                <img th:src="@{/img/{path} (path = ${product.getFilename()})}">-->
             </div>
-            <div sec:authorize="hasAuthority('SELLER')">
+<!--            <div th:sec:authorize="hasRole('SELLER')">-->
                 <a th:href="'/home/' + ${product.id} + '/edit'">Редактировать</a><br>
                 <form th:action="'/home/' + ${product.id} + '/remove'" method="post">
                     <button type="submit">Удалить</button>
                 </form>
-            </div>
+<!--            </div>-->
             <hr>
         </div>
     </div>
