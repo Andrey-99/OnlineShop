@@ -7,7 +7,7 @@
 <body>
 <h1>Редактирование продукта</h1>
 <div th:each="product : ${page.content}">
-    <form method="post" enctype="multipart/form-data">
+    <form  method="post" enctype="multipart/form-data">
         <p th:text="${product.getSeller().getUsername()}"></p>
         <p>Введите наименование продукта  <input type="text" name="productname" th:value="${product.producttitle}"/></p>
         <p>Введите описание продукта <textarea name="description"  cols="40" rows="3" th:text="${product.description}"/></p>

@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,9 +16,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank(message = "Введите логин")
+//    @NotBlank(message = "Введите логин")
     private String username;
-    @NotBlank(message = "Введите пароль")
+//    @NotBlank(message = "Введите пароль")
     private String password;
     @Transient
     @NotBlank(message = "Пароли не совпадают")
@@ -33,6 +34,17 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_buy",
+//            joinColumns = { @JoinColumn(name = "product_id")},
+//            inverseJoinColumns = { @JoinColumn(name = "userBuy_id")}
+//    )
+//    private Set<Product> productsBuy = new HashSet<>();
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Product> products;
 
     public Long getId() {
         return id;
@@ -122,4 +134,19 @@ public class User implements UserDetails {
     public void setPassword2(String password2) {
         this.password2 = password2;
     }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+    //    public Set<Product> getProductsBuy() {
+//        return productsBuy;
+//    }
+//
+//    public void setProductsBuy(Set<Product> productsBuy) {
+//        this.productsBuy = productsBuy;
+//    }
 }

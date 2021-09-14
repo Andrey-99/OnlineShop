@@ -1,5 +1,6 @@
 package com.ibs21.OnlineShop.controllers;
 
+import com.ibs21.OnlineShop.domain.Product;
 import com.ibs21.OnlineShop.domain.Role;
 import com.ibs21.OnlineShop.domain.User;
 import com.ibs21.OnlineShop.repos.UserRepository;
@@ -51,27 +52,50 @@ public class UserController {
     ) {
 
        userService.saveUser(user, username, form);
-
         return "redirect:/users";
     }
 
     @GetMapping("profile")
+        public String getProfileInfo(Model model, @AuthenticationPrincipal User user){
+            Set<Product> products = user.getProducts();
+            model.addAttribute("products", products);
+
+            return "profile";
+        }
+
+    @GetMapping("profile/user-modify")
     public String getProfile(Model model, @AuthenticationPrincipal User user){
+
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmail());
 
-        return "profile";
+        return "users/user-modify";
     }
 
-    @PostMapping("profile")
+
+
+    @PostMapping("profile/user-modify")
     public String updateProfile(
             @AuthenticationPrincipal User user,
             @RequestParam String password,
             @RequestParam String email
     ){
-//        userService.updateProfile(user, password, email);
         userService.updateProfile(user, passwordEncoder.encode(password), email);
-
         return "redirect:/users/profile";
     }
+
+
+//    @GetMapping("profile")
+//    public String userProducts(@AuthenticationPrincipal User currentUser,
+//                               @PathVariable User user,
+//                               Model model
+//                               ){
+//
+//        Set<Product> products = user.getProducts();
+//
+//        model.addAttribute("products", products);
+//
+//
+//        return "users/user-edit";
+//    }
 }

@@ -21,12 +21,12 @@
                 <a th:href="'/home/' + ${product.id}"><img th:src="@{/img/{path} (path = ${product.getFilename()})}"></a><br>
                 <!--                <img th:src="@{/img/{path} (path = ${product.getFilename()})}">-->
             </div>
-<!--            <div th:sec:authorize="hasRole('SELLER')">-->
+
                 <a th:href="'/home/' + ${product.id} + '/edit'">Редактировать</a><br>
                 <form th:action="'/home/' + ${product.id} + '/remove'" method="post">
                     <button type="submit">Удалить</button>
                 </form>
-<!--            </div>-->
+
             <hr>
         </div>
     </div>
