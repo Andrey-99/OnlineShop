@@ -32,7 +32,7 @@ public class TopController {
     private String uploadPath;
 
     @GetMapping("")
-    public String home(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable) {
+    public String home(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 10) Pageable pageable) {
         Page<Product> page;
         page = productRepository.findAll(pageable);
         model.addAttribute("page", page);
@@ -113,7 +113,10 @@ public class TopController {
             if(page == null || page.isEmpty()){
                 model.addAttribute("message", message);
             }
-        }else {
+        }else if(filter == null || filter.isEmpty()){
+            return "redirect:/home";
+        }
+        else {
             page = productRepository.findAll(pageable);
         }
             model.addAttribute("page", page);
