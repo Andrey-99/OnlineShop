@@ -19,6 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+/*
+рпнномом
+ */
 @Controller
 @RequestMapping("/products")
 public class ProductsController {
