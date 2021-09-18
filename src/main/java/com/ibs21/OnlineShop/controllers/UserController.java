@@ -46,7 +46,6 @@ public class UserController {
     @Value("${upload.path}")
     private String uploadPath;
 
-//    Set<Product> products;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping()
@@ -157,9 +156,6 @@ public class UserController {
     public String productDelete(@PathVariable(value = "id") Long id, Model model, User user) {
         Product product = productRepository.findById(id).orElseThrow();
         productRepository.delete(product);
-//        User u = userRepository.findById(user.getId());
-//        u.getProducts().remove(product);
-//        userRepository.save(u);
 
         return "redirect:/users/profile";
     }
@@ -200,26 +196,9 @@ public class UserController {
                 product.setFilename(resultFilename);
             }
             productRepository.save(product);
-//            products.add(product);
 
         }
         return "redirect:/home";
     }
 
-
-
-
-//    @GetMapping("profile")
-//    public String userProducts(@AuthenticationPrincipal User currentUser,
-//                               @PathVariable User user,
-//                               Model model
-//                               ){
-//
-//        Set<Product> products = user.getProducts();
-//
-//        model.addAttribute("products", products);
-//
-//
-//        return "users/user-edit";
-//    }
 }
