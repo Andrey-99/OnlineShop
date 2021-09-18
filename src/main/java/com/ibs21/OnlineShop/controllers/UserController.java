@@ -77,9 +77,9 @@ public class UserController {
     @GetMapping("profile")
         public String getProfileInfo(Model model, @AuthenticationPrincipal User user){
             var usr = userRepository.findById(user.getId()).get();
-            Set<Product> products = usr.getProducts();
-//            Set<Product> products = new TreeSet<>(Comparator.comparing(Product::getId));
-//            products = usr.getProducts();
+//            Set<Product> products = usr.getProducts();
+            Set<Product> products = new TreeSet<>(Comparator.comparing(Product::getId).reversed());
+            products.addAll(usr.getProducts());
             model.addAttribute("username", user.getUsername());
             model.addAttribute("products", products);
             return "profile";
