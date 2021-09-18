@@ -78,6 +78,8 @@ public class UserController {
         public String getProfileInfo(Model model, @AuthenticationPrincipal User user){
             var usr = userRepository.findById(user.getId()).get();
             Set<Product> products = usr.getProducts();
+//            Set<Product> products = new TreeSet<>(Comparator.comparing(Product::getId));
+//            products = usr.getProducts();
             model.addAttribute("username", user.getUsername());
             model.addAttribute("products", products);
             return "profile";
@@ -198,7 +200,7 @@ public class UserController {
             productRepository.save(product);
 
         }
-        return "redirect:/home";
+        return "redirect:/users/profile";
     }
 
 }
