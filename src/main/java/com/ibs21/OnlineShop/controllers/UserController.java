@@ -6,6 +6,7 @@ import com.ibs21.OnlineShop.domain.User;
 import com.ibs21.OnlineShop.repos.ProductRepository;
 import com.ibs21.OnlineShop.repos.UserRepository;
 import com.ibs21.OnlineShop.service.UserService;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +21,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.*;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 @RequestMapping("/users")
 
 public class UserController {
+
 
     @Autowired
     private UserService userService;
@@ -46,6 +45,8 @@ public class UserController {
 
     @Value("${upload.path}")
     private String uploadPath;
+
+//    Set<Product> products;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping()
@@ -76,7 +77,8 @@ public class UserController {
 
     @GetMapping("profile")
         public String getProfileInfo(Model model, @AuthenticationPrincipal User user){
-            Set<Product> products = user.getProducts();
+            var usr = userRepository.findById(user.getId()).get();
+            Set<Product> products = usr.getProducts();
             model.addAttribute("username", user.getUsername());
             model.addAttribute("products", products);
             return "profile";
@@ -122,7 +124,7 @@ public class UserController {
                                 @RequestParam("description") String description,
                                 @RequestParam("count") int count,
                                 @RequestParam("price") int price,
-                                @RequestParam("file") MultipartFile file) throws IOException {
+                                @RequestParam("file") MultipartFile file, Model model) throws IOException {
         if (productname != null && description != null && count > 0 && price > 0) {
             Product product = productRepository.findById(id).orElseThrow();
             product.setProducttitle(productname);
@@ -143,7 +145,10 @@ public class UserController {
                 product.setFilename(resultFilename);
             }
             productRepository.save(product);
+
         }
+
+
         return "redirect:/users/profile";
     }
 
@@ -152,11 +157,56 @@ public class UserController {
     public String productDelete(@PathVariable(value = "id") Long id, Model model, User user) {
         Product product = productRepository.findById(id).orElseThrow();
         productRepository.delete(product);
-
-
+//        User u = userRepository.findById(user.getId());
+//        u.getProducts().remove(product);
+//        userRepository.save(u);
 
         return "redirect:/users/profile";
     }
+
+
+    @GetMapping("/profile/products/add")
+    public String addproduct(@AuthenticationPrincipal User user, Model model) {
+
+        return "products/add";
+    }
+
+    @PostMapping("/profile/products/add")
+    public String add(@AuthenticationPrincipal User user,
+                      @RequestParam("productname") String productname,
+                      @RequestParam("description") String description,
+                      @RequestParam("count") int count,
+                      @RequestParam("price") int price,
+                      @RequestParam("category") String category,
+                      @RequestParam("file") MultipartFile file) throws IOException {
+        if (productname != null && description != null && count > 0 && price > 0) {
+            Product product = new Product();
+            product.setProducttitle(productname);
+            product.setDescription(description);
+            product.setCount(count);
+            product.setPrice(price);
+            product.setCategory(category);
+            product.setRaiting(0);
+            product.setSeller(user);
+            if(file != null && !file.getOriginalFilename().isEmpty()) {
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+                String uuidFile = UUID.randomUUID().toString();
+                String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+                file.transferTo(new File(uploadPath + "/" + resultFilename));
+                product.setFilename(resultFilename);
+            }
+            productRepository.save(product);
+//            products.add(product);
+
+        }
+        return "redirect:/home";
+    }
+
+
 
 
 //    @GetMapping("profile")
