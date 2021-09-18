@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 public class User implements UserDetails {
     @Id
@@ -35,15 +36,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "user_buy",
-//            joinColumns = { @JoinColumn(name = "product_id")},
-//            inverseJoinColumns = { @JoinColumn(name = "userBuy_id")}
-//    )
-//    private Set<Product> productsBuy = new HashSet<>();
-
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<Product> products;
 
     public Long getId() {

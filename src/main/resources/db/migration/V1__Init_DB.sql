@@ -25,6 +25,8 @@ create table user (
     primary key (id)
 );
 
+
+
     create table user_role (
     user_id bigint not null,
     roles varchar(255)

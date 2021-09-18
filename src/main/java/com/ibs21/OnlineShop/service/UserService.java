@@ -23,10 +23,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private MailSender mailSender;
 
-
-//    @Autowired
-//    public PasswordEncoder passwordEncoder;
-
     @Autowired
     public PasswordEncoder passwordEncoder;
 
@@ -95,6 +91,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
 
     }
+
 
     public void updateProfile(User user, String password, String email) {
         String userEmail = user.getEmail();

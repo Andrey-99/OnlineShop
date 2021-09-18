@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,58 +50,57 @@ public class TopController {
 
 
 //    @PreAuthorize("hasRole('SELLER')")
-    @GetMapping("/{id}/edit")
-    public String productEdit(@PathVariable(value = "id") Long id, Model model, Pageable pageable) {
-        if (!productRepository.existsById(id)) {
-            return "redirect:/home";
-        }
-        Page<Product> page;
-        page = productRepository.findById(id, pageable);
-        model.addAttribute("page", page);
-
-        return "products/product-edit";
-    }
-
-//    @PreAuthorize("hasRole('SELLER')")
-    @PostMapping("/{id}/edit")
-        public String productUpdate(@PathVariable(value = "id") Long id, @AuthenticationPrincipal User user,
-                @RequestParam("productname") String productname,
-                @RequestParam("description") String description,
-        @RequestParam("count") int count,
-        @RequestParam("price") int price,
-        @RequestParam("file") MultipartFile file) throws IOException {
-            if (productname != null && description != null && count > 0 && price > 0) {
-                Product product = productRepository.findById(id).orElseThrow();
-                product.setProducttitle(productname);
-                product.setDescription(description);
-                product.setCount(count);
-                product.setPrice(price);
-                product.setRaiting(0);
-                product.setSeller(user);
-                if(file != null && !file.getOriginalFilename().isEmpty()) {
-                    File uploadDir = new File(uploadPath);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdir();
-                    }
-                    String uuidFile = UUID.randomUUID().toString();
-                    String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-                    file.transferTo(new File(uploadPath + "/" + resultFilename));
-                    product.setFilename(resultFilename);
-                }
-                productRepository.save(product);
-            }
-            return "redirect:/home";
-        }
-
-//        @PreAuthorize("hasRole('SELLER')")
-        @PostMapping("/{id}/remove")
-        public String productDelete(@PathVariable(value = "id") Long id, Model model){
-            Product product = productRepository.findById(id).orElseThrow();
-            productRepository.delete(product);
-            return "redirect:/home";
-        }
-
+//    @GetMapping("/{id}/edit")
+//    public String productEdit(@PathVariable(value = "id") Long id, Model model, Pageable pageable) {
+//        if (!productRepository.existsById(id)) {
+//            return "redirect:/home";
+//        }
+//        Page<Product> page;
+//        page = productRepository.findById(id, pageable);
+//        model.addAttribute("page", page);
+//
+//        return "products/product-edit";
+//    }
+//
+////    @PreAuthorize("hasRole('SELLER')")
+//    @PostMapping("/{id}/edit")
+//        public String productUpdate(@PathVariable(value = "id") Long id, @AuthenticationPrincipal User user,
+//                @RequestParam("productname") String productname,
+//                @RequestParam("description") String description,
+//        @RequestParam("count") int count,
+//        @RequestParam("price") int price,
+//        @RequestParam("file") MultipartFile file) throws IOException {
+//            if (productname != null && description != null && count > 0 && price > 0) {
+//                Product product = productRepository.findById(id).orElseThrow();
+//                product.setProducttitle(productname);
+//                product.setDescription(description);
+//                product.setCount(count);
+//                product.setPrice(price);
+//                product.setRaiting(0);
+//                product.setSeller(user);
+//                if(file != null && !file.getOriginalFilename().isEmpty()) {
+//                    File uploadDir = new File(uploadPath);
+//                    if (!uploadDir.exists()) {
+//                        uploadDir.mkdir();
+//                    }
+//                    String uuidFile = UUID.randomUUID().toString();
+//                    String resultFilename = uuidFile + "." + file.getOriginalFilename();
+//
+//                    file.transferTo(new File(uploadPath + "/" + resultFilename));
+//                    product.setFilename(resultFilename);
+//                }
+//                productRepository.save(product);
+//            }
+//            return "redirect:/home";
+//        }
+//
+//
+//    @PostMapping("/{id}/remove")
+//    public String productDelete(@PathVariable(value = "id") Long id, Model model) {
+//        Product product = productRepository.findById(id).orElseThrow();
+//        productRepository.delete(product);
+//        return "redirect:/home";
+//    }
 
     @PostMapping("search")
     public String filter(@RequestParam String filter, Model model, Pageable pageable){
