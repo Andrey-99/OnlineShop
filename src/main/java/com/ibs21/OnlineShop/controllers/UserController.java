@@ -96,13 +96,32 @@ public class UserController {
 
 
 
-    @PostMapping("profile/user-modify")
-    public String updateProfile(
+//    @PostMapping("profile/user-modify")
+//    public String updateProfile(
+//            @AuthenticationPrincipal User user,
+//            @RequestParam String password,
+//            @RequestParam String email
+//    ){
+//        userService.updateProfile(user, passwordEncoder.encode(password), email);
+//        return "redirect:/users/profile";
+//    }
+
+    @PostMapping("profile/user-modify/password")
+    public String updateProfilePassword(
             @AuthenticationPrincipal User user,
-            @RequestParam String password,
+            @RequestParam String password
+    ){
+
+        userService.updateProfilePassword(user, passwordEncoder.encode(password));
+        return "redirect:/users/profile";
+    }
+
+    @PostMapping("profile/user-modify/email")
+    public String updateProfileEmail(
+            @AuthenticationPrincipal User user,
             @RequestParam String email
     ){
-        userService.updateProfile(user, passwordEncoder.encode(password), email);
+        userService.updateProfileEmail(user, email);
         return "redirect:/users/profile";
     }
 

@@ -93,7 +93,42 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public void updateProfile(User user, String password, String email) {
+//    public void updateProfile(User user, String password, String email) {
+//        String userEmail = user.getEmail();
+//
+//        boolean isEmailChanged = (email != null && !email.equals(userEmail)) ||
+//                (userEmail != null && !userEmail.equals(email));
+//
+//        if (isEmailChanged){
+//            user.setEmail(email);
+//
+//            if(!StringUtils.isEmpty(email)){
+//                user.setActivationCode(UUID.randomUUID().toString());
+//            }
+//
+//            if(!StringUtils.isEmpty(password)){
+//                user.setPassword(password);
+//            }
+//
+//            userRepository.save(user);
+//
+//            if(isEmailChanged){
+//                sendMessage(user);
+//            }
+//
+//
+//        }
+//    }
+
+    public void updateProfilePassword(User user, String password){
+        if(!StringUtils.isEmpty(password)){
+                user.setPassword(password);
+            }
+
+        userRepository.save(user);
+    }
+
+    public void updateProfileEmail(User user, String email){
         String userEmail = user.getEmail();
 
         boolean isEmailChanged = (email != null && !email.equals(userEmail)) ||
@@ -104,10 +139,6 @@ public class UserService implements UserDetailsService {
 
             if(!StringUtils.isEmpty(email)){
                 user.setActivationCode(UUID.randomUUID().toString());
-            }
-
-            if(!StringUtils.isEmpty(password)){
-                user.setPassword(password);
             }
 
             userRepository.save(user);
