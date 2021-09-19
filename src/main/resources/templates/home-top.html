@@ -47,11 +47,11 @@
     <div class="filter__product">
         <p>Фильтер продуктов</p>
         <form action="/home/filter" method="post">
-            <input value = "Гигиена" type="checkbox" id="hygiene" name="filterProduct" th:checked="${param.value}"><label for="hygiene">Гигиена</label>
-            <input value = "Книги" type="checkbox" id="books" name="filterProduct" th:checked="${param.value}"><label for="books">Книги</label>
-            <input value = "Игры" type="checkbox" id="games" name="filterProduct" th:checked="${param.value}"><label for="games">Игры</label>
-            <input value = "Сувениры" type="checkbox" id="souvenirs" name="filterProduct" th:checked="${param.value}"><label for="souvenirs">Сувениры</label>
-            <input value = "Электроника" type="checkbox" id="electronics" name="filterProduct" th:checked="${param.value}"><label for="electronics">Электроника</label>
+            <input value = "Гигиена" type="checkbox" id="hygiene" name="filterProduct"><label for="hygiene">Гигиена</label>
+            <input value = "Книги" type="checkbox" id="books" name="filterProduct"><label for="books">Книги</label>
+            <input value = "Игры" type="checkbox" id="games" name="filterProduct"><label for="games">Игры</label>
+            <input value = "Сувениры" type="checkbox" id="souvenirs" name="filterProduct"><label for="souvenirs">Сувениры</label>
+            <input value = "Электроника" type="checkbox" id="electronics" name="filterProduct"><label for="electronics">Электроника</label>
 
             <input type="number"  name="minprice" min ="0" th:value="${param.minprice}"><span>Мин.цена</span>
             <input type="number"  name="maxprice" min ="0" th:value="${param.maxprice}"><span>Макс.цена</span>
