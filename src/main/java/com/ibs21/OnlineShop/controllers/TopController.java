@@ -119,19 +119,16 @@ public class TopController {
 
     @PostMapping("filter")
     public String filterProduct(
-            @RequestParam("filterProduct") List<String> categoryes,
+            @RequestParam(value = "filterProduct", required = false) List<String> categoryes,
             Model model,
             Pageable pageable
     ){
         if(categoryes != null){
             Page<Product> page = null;
-            for(String categoryesStr : categoryes){
-                String category = categoryesStr;
-                page = productRepository.findByCategory(category,pageable);
-            }
+            page = productRepository.findByCategoryIn(categoryes, pageable);
             model.addAttribute("page", page);
         }else if(categoryes == null){
-
+            return "redirect:/home";
         }
 
         return "home-top";
