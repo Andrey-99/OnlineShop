@@ -22,6 +22,7 @@ public class TopController {
     @Autowired
     private ProductRepository productRepository;
 
+
     @Value("${upload.path}")
     private String uploadPath;
     private Object HibernateUtil;
@@ -107,7 +108,8 @@ public class TopController {
             if(page == null || page.isEmpty()){
                 model.addAttribute("message", message);
             }
-        }else if(filter == null || filter.isEmpty()){
+        }
+        else if(filter == null || filter.isEmpty()){
             return "redirect:/home";
         }
         else {
