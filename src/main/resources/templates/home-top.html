@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <head>
     <meta charset="UTF-8">
     <title>GR Home</title>
@@ -19,9 +19,16 @@
     <a>Корзина</a>
     <a>Друзья</a>
     <a>Авторизация</a>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+
+    <div sec:authorize="isAnonymous()">
+        <a href="/login">Войти</a>
+    </div>
+
 </header>
     <h1>Топ всех продуктов из БД</h1>
 <!--    <a href="/products/add">Добавить товар</a>-->

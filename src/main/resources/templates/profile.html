@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Profile </title>
 </head>
@@ -15,8 +15,10 @@
 
 <p>Профиль пользователя: <span th:text="${username}"></span> </p>
 <a href="/users/profile/user-modify">Редактировать данные</a>
-<a href="/users/profile/products/add">Добавить товар</a>
 
+<div sec:authorize="hasAuthority('SELLER')">
+    <a href="/users/profile/products/add">Добавить товар</a>
+</div>
 <!--<form th:action="@{/users/profile}" method="post">-->
 <!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
 <!--    <div><label> email: <input type="email" name="email"/> </label></div>-->
