@@ -1,6 +1,7 @@
 package com.ibs21.OnlineShop.repos;
 
 import com.ibs21.OnlineShop.domain.Product;
+import jdk.jfr.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +18,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     Page<Product> findByProducttitle(String producttitle, Pageable pageable);
     Page<Product> findById(Long id, Pageable pageable);
     Page<Product> findByCategoryIn(List<String> category,Pageable pageable);
+    Page<Product> findByCategoryInAndPriceBetween(List<String>categories, int minPrice,int maxPrice,Pageable pageable);
 
 }

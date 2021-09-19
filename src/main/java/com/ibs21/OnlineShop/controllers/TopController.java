@@ -121,13 +121,16 @@ public class TopController {
 
     @PostMapping("filter")
     public String filterProduct(
-            @RequestParam(value = "filterProduct", required = false) List<String> categoryes,
+            @RequestParam(value = "filterProduct", required = false, defaultValue = "Гигиена,Книги,Игры,Сувениры,Электроника") List<String> categoryes,
+            @RequestParam(value = "minprice", defaultValue = "0") int minprice,
+            @RequestParam(value = "maxprice", defaultValue = "9999999" ) int maxprice,
             Model model,
             Pageable pageable
     ){
         if(categoryes != null){
             Page<Product> page = null;
-            page = productRepository.findByCategoryIn(categoryes, pageable);
+//            page = productRepository.findByCategoryIn(categoryes, pageable);
+            page = productRepository.findByCategoryInAndPriceBetween(categoryes, minprice, maxprice, pageable);
             model.addAttribute("page", page);
         }else if(categoryes == null){
             return "redirect:/home";
