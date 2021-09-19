@@ -49,7 +49,7 @@
 
     <div th:if="${page}">
         <div th:each="product : ${page.content}">
-<!--            <p><a th:text="${product.producttitle}"></a></p>-->
+
             <a th:href="'/home/' + ${product.id}"><span th:text="${product.producttitle}"> </span></a><br>
             <p>от продавца - <span th:text="${product.getSeller().getUsername()}"></span></p>
             <p>Категория - <span th:text="${product.getCategory()}"></span></p>
