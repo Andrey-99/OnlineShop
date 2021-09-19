@@ -14,11 +14,13 @@
 </head>
 <body>
 <header>
-    <a>Главная</a>
-    <a>Избранное</a>
-    <a>Корзина</a>
-    <a>Друзья</a>
-    <a>Авторизация</a>
+    <a href="/">Главная</a>
+    <a href="/home">Каталог</a>
+    <a href="/busket">Корзина</a>
+    <a href="/users/profile">Мой профиль</a>
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <a href="/users">Администраторам</a>
+    </div>
     <div sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>

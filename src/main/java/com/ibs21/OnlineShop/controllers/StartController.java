@@ -12,7 +12,8 @@ public class StartController {
         return "start";
     }
 
-    {
-
+    @GetMapping("/busket")
+    public String busket(){
+        return "busket";
     }
 }
