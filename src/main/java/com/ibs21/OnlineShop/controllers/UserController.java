@@ -182,12 +182,14 @@ public class UserController {
     }
 
 
+    @PreAuthorize("hasAuthority('SELLER')")
     @GetMapping("/profile/products/add")
     public String addproduct(@AuthenticationPrincipal User user, Model model) {
 
         return "products/add";
     }
 
+    @PreAuthorize("hasAuthority('SELLER')")
     @PostMapping("/profile/products/add")
     public String add(@AuthenticationPrincipal User user,
                       @RequestParam("productname") String productname,

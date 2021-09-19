@@ -27,10 +27,9 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String add(@Valid User user, BindingResult bindingResult, Model model, @RequestParam(required=false) boolean role) {
 
-        if (user.getPassword() != null && !user.getPassword().equals(user.getPassword2())){
-            model.addAttribute("message", "пароли разные");
-        }
-
+//        if (user.getPassword() != null && !user.getPassword().equals(user.getPassword2())){
+//            model.addAttribute("message", "пароли разные");
+//        }
 
 
         if (!userService.addUser(user, role)) {

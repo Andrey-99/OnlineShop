@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <title>GR Home</title>
     <link rel="stylesheet" href="/static/style.css">
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
     <style>
             .pagination-div{user-select: none;}
             .pagination-div span{border-radius:3px;border:1px solid #999;
             padding:5px;margin:10px 0px 0px 10px;display:inline-block}
             span.selected{background:#ccf;}
+            .filter__product{ border:1px solid #000;margin-top: 8px; width: 50%;padding: 5px;}
     </style>
 </head>
 <body>
@@ -33,11 +33,26 @@
     <div th:if="${message}">
         <p th:text="${message}"></p>
     </div>
+
+    <div class="filter__product">
+        <p>Фильтер продуктов</p>
+        <form action="/home/filter" method="post">
+            <input value = "Гигиена" type="checkbox" id="hygiene" name="filterProduct" ><label for="hygiene">Гигиена</label>
+            <input value = "Книги" type="checkbox" id="books" name="filterProduct"><label for="books">Книги</label>
+            <input value = "Игры" type="checkbox" id="games" name="filterProduct"><label for="games">Игры</label>
+            <input value = "Сувениры" type="checkbox" id="souvenirs" name="filterProduct"><label for="souvenirs">Сувениры</label>
+            <input value = "Электроника" type="checkbox" id="electronics" name="filterProduct"><label for="electronics">Электроника</label>
+
+            <button type="submit">Применить</button>
+        </form>
+    </div>
+
     <div th:if="${page}">
         <div th:each="product : ${page.content}">
 <!--            <p><a th:text="${product.producttitle}"></a></p>-->
             <a th:href="'/home/' + ${product.id}"><span th:text="${product.producttitle}"> </span></a><br>
             <p>от продавца - <span th:text="${product.getSeller().getUsername()}"></span></p>
+            <p>Категория - <span th:text="${product.getCategory()}"></span></p>
             <p>Стоимость: <span th:text="${product.getPrice()}"></span></p>
 <!--            <p>Описание: <p th:text="${product.getDescription()}"></p></p>-->
             <p>Рейтинг: <span th:text="${product.getRaiting()}"></span></p>

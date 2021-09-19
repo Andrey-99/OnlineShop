@@ -1,24 +1,19 @@
 package com.ibs21.OnlineShop.controllers;
 
 import com.ibs21.OnlineShop.domain.Product;
-import com.ibs21.OnlineShop.domain.User;
 import com.ibs21.OnlineShop.repos.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
+import java.util.List;
 
 @Controller
 @RequestMapping("/home")
@@ -29,6 +24,7 @@ public class TopController {
 
     @Value("${upload.path}")
     private String uploadPath;
+    private Object HibernateUtil;
 
     @GetMapping("")
     public String home(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 10) Pageable pageable) {
@@ -118,6 +114,24 @@ public class TopController {
             page = productRepository.findAll(pageable);
         }
             model.addAttribute("page", page);
+        return "home-top";
+    }
+
+    @PostMapping("filter")
+    public String filterProduct(
+            @RequestParam("filterProduct") List<String> categoryes,
+            Model model,
+            Pageable pageable
+    ){
+        if(categoryes != null){
+            Page<Product> page = null;
+            for(String categoryesStr : categoryes){
+                String category = categoryesStr;
+                page = productRepository.findByCategory(category,pageable);
+            }
+            model.addAttribute("page", page);
+        }
+
         return "home-top";
     }
 

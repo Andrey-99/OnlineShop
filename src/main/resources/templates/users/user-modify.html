@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>Изменение данных пользователя: <span th:text="${username}"></span> </p>
+
+<!--    <form th:action="@{/users/profile/user-modify}" method="post">-->
+<!--        <div><label> Password: <input type="password" name="password"/> </label></div>-->
+<!--        <div><label> email: <input type="email" name="email"/> </label></div>-->
+<!--        <button type="submit">Сохранить</button>-->
+<!--    </form>-->
+
+    <p>Изменить пароль</p>
+    <form th:action="@{/users/profile/user-modify/password}" method="post">
+        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <button type="submit">Сохранить</button>
+    </form>
+    <p>Изменить почту</p>
+    <form th:action="@{/users/profile/user-modify/email}" method="post">
+        <div><label> email: <input type="email" name="email"/> </label></div>
+        <button type="submit">Сохранить</button>
+    </form>
+
+</body>
+</html>
