@@ -130,6 +130,8 @@ public class TopController {
                 page = productRepository.findByCategory(category,pageable);
             }
             model.addAttribute("page", page);
+        }else if(categoryes == null){
+
         }
 
         return "home-top";

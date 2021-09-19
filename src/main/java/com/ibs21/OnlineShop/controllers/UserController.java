@@ -173,6 +173,7 @@ public class UserController {
     }
 
 
+    @PreAuthorize("hasAuthority('SELLER')")
     @PostMapping("/profile/{id}/remove")
     public String productDelete(@PathVariable(value = "id") Long id, Model model, User user) {
         Product product = productRepository.findById(id).orElseThrow();
