@@ -137,7 +137,7 @@ public class UserController {
         return "products/product-edit";
     }
 
-    //    @PreAuthorize("hasRole('SELLER')")
+    @PreAuthorize("hasAnyAuthority('SELLER', 'ADMIN')")
     @PostMapping("/profile/{id}/edit")
     public String productUpdate(@PathVariable(value = "id") Long id, @AuthenticationPrincipal User user,
                                 @RequestParam("productname") String productname,
@@ -173,7 +173,8 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasAuthority('SELLER')")
+//    @PreAuthorize("hasAuthority('SELLER')")
+    @PreAuthorize("hasAnyAuthority('SELLER', 'ADMIN')")
     @PostMapping("/profile/{id}/remove")
     public String productDelete(@PathVariable(value = "id") Long id, Model model, User user) {
         Product product = productRepository.findById(id).orElseThrow();

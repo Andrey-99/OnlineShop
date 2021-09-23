@@ -46,8 +46,8 @@
 
     <div class="filter__product">
         <p>Фильтер продуктов</p>
-        <form action="/home/filter" method="post">
-            <input value = "Гигиена" type="checkbox" id="hygiene" name="filterProduct"><label for="hygiene">Гигиена</label>
+        <form action="/home/filter" id="search-form" method="post">
+            <input value = "Гигиена" type="checkbox" id="hygiene" name="filterProduct" ><label for="hygiene">Гигиена</label>
             <input value = "Книги" type="checkbox" id="books" name="filterProduct"><label for="books">Книги</label>
             <input value = "Игры" type="checkbox" id="games" name="filterProduct"><label for="games">Игры</label>
             <input value = "Сувениры" type="checkbox" id="souvenirs" name="filterProduct"><label for="souvenirs">Сувениры</label>
@@ -57,7 +57,7 @@
             <input type="number"  name="maxprice" min ="0" th:value="${param.maxprice}"><span>Макс.цена</span>
 
 
-            <button type="submit">Применить</button>
+            <button type="submit" id="btn-search">Применить</button>
         </form>
     </div>
 
@@ -75,6 +75,14 @@
 <!--                <img th:src="@{/img/{path} (path = ${product.getFilename()})}">-->
             </div>
 <!--            <a th:href="'/home/' + ${product.id} + '/edit'">Редактировать</a><br>-->
+            <button>Добавить в корзину</button>
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <a th:href="'/users/profile/' + ${product.id} + '/edit'">Редактировать</a><br>
+                <form th:action="'/users/profile/' + ${product.id} + '/remove'" method="post">
+                    <button type="submit">Удалить</button>
+                </form>
+            </div>
+
             <hr>
         </div>
     </div>
@@ -95,6 +103,11 @@
             </span>
         </div>
     </div>
+
+    <script src="webjars/jquery/2.2.4/jquery.min.js"></script>
+    <script src="component/main.js"></script>
+
+
 
 </body>
 </html>

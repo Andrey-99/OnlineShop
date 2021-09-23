@@ -9,11 +9,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
+
 
 import org.springframework.data.domain.Pageable;
 
+
+
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/home")
@@ -104,7 +109,7 @@ public class TopController {
         String message = "Такого товара нет";
         Page<Product> page;
         if (filter != null && !filter.isEmpty()){
-            page = productRepository.findByProducttitle(filter, pageable);
+            page = productRepository.findByProducttitleContainingIgnoreCase(filter, pageable);
             if(page == null || page.isEmpty()){
                 model.addAttribute("message", message);
             }
@@ -138,6 +143,7 @@ public class TopController {
 
         return "home-top";
     }
+
 
 
 }

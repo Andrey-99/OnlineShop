@@ -6,6 +6,7 @@ import com.ibs21.OnlineShop.repos.ProductRepository;
 import com.ibs21.OnlineShop.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ import java.util.UUID;
 
 
 @Controller
-@RequestMapping("/products")
+//@RequestMapping("/products")
 public class ProductsController {
 
     @Autowired
@@ -33,11 +34,12 @@ public class ProductsController {
     @Value("${upload.path}")
     private String uploadPath;
 
-    @GetMapping("/{id}")
+    @GetMapping("/products/{id}")
     public String product(@PathVariable("id") Long id, Model model) {
         model.addAttribute("product", productRepository.findById(id));
         return "products/product";
     }
+
 
 //    @GetMapping("/add")
 //    public String addproduct() {
